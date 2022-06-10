@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport"
-	content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
 <title>Spring Boot WebSocket Chat Application | CalliCoder</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
 </head>
-<body 
-	style="background-position: center; background-repeat: no-repeat; background-size: cover;">
+<body>
 	<noscript>
 		<h2>Sorry! Your browser doesn't support Javascript</h2>
 	</noscript>
@@ -50,15 +48,17 @@
 			
 
 		</div>
-	</div>			
-	<th:block layout:fragment="content"></th:block>
+	</div>		
 
+
+	<div th:replace="omok :: omokFragment"></div>
+
+	<script defer th:src="@{/js/main.js}"></script>
 
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-	<script th:src="@{/js/main.js}"></script>
 
 </body>
 </html>

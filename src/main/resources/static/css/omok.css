@@ -1,0 +1,142 @@
+ .top{
+       margin: 0 auto;
+       width: 1000px; height: 50px;
+
+     }
+
+     .layout{
+       margin: 0 auto;
+       border : 2px solid black;
+       width: 1000px; height: 700px;
+       background-color: skyblue;
+     }
+
+
+     .left {
+       border-right : 1px solid black;
+       float: left;
+       width: 700px; height: 700px;
+
+     }
+
+     .right{
+       /*       border : 1px solid black; */
+       float: right;
+       float: bottom;
+       width: 270px; height: 700px;
+
+     }
+
+     .boxframe{
+       /*       border :1px solid black; */
+       width: 270px; height: 600px;
+       margin : 50px 10px 10px 8px;
+       position: relative;
+     }
+
+     .box{
+       width: 130px; height: 120px;
+       padding: 0;
+       margin: -20px;
+       /*        border :1px solid black; */
+       position: absolute;
+     }
+
+     .box2{
+       width: 150px; height: 120px;
+       margin: 0px 0px 0px 100px;
+       /*        border :1px solid black; */
+       position: absolute;
+     }
+
+     .box3{
+       width: 220px; height: 70px;
+       margin: 140px 0px 0px 38px;
+       /*        border: 1px solid black; */
+       position: absolute;
+     }
+
+     .box4{
+       width: 268px; height: 294px;
+       margin: 250px 0px 0px -20px;
+       border: 1px solid black;
+       position: absolute;
+     }
+
+     .box5{
+       width: 220px; height: 70px;
+       margin: 545px 0px 0px 38px;
+       /*        border: 1px solid black; */
+       position: absolute;
+     }
+
+     /********** 버튼 스타일링 **********/
+     .btn{
+       text-decoration: none;
+       font-size: 2rem;
+       color: white;
+       padding: 10px 20px 10px 20px;
+       margin: 20px;
+       display: inline-block;
+       border-radius: 10px;
+       transition: all 0.1s;
+       text-shadow: 0px -2px rgba(0, 0, 0, 0.44);
+     }
+
+     .btn:active{
+       transform: translateY(3px);
+     }
+
+     .btn:inactive{
+
+     }
+
+     .btn.small{
+       font-size: 1em;
+       text-shadow: 0px -1px rgba(0, 0, 0, 0.44);
+     }
+
+     .btn.text-color-reverse{
+       color: black;
+     }
+
+     .btn.blue{
+       background-color:#1f75d9;
+       /*        border-bottom: 5px solid #165195; */
+     }
+
+     .btn.blue:active{
+       /*        border-bottom: 2px solid #165195; */
+     }
+
+     .btn.red{
+       background-color:#ff521e;
+       /*        border-bottom: 5px solid #c1370e; */
+     }
+
+     .btn.red:active{
+       /*        border-bottom: 2px solid #c1370e; */
+     }
+
+     .btn.yellow{
+       background-color:#eded1d;
+       /*        border-bottom: 5px solid #c1c11e; */
+     }
+
+     .btn.yellow:active{
+       /*        border-bottom: 5px solid #c1c11e; */
+     }
+
+     .btn.gray{
+       background-color:#41413a;
+       /*        border-bottom: 5px solid #1d1d1b; */
+     }
+
+     .btn.gray:active{
+       /*        border-bottom: 5px solid #1d1d1b; */
+     }
+
+     /********** 게임 로그창 스타일링 **********/
+     .box4 textarea{
+       resize: none;
+     }

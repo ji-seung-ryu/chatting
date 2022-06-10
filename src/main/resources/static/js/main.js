@@ -7,6 +7,7 @@ var messageForm = document.querySelector('#messageForm');
 var messageInput = document.querySelector('#message');
 var messageArea = document.querySelector('#messageArea');
 var connectingElement = document.querySelector('.connecting');
+//var board = document.querySelector('#board');
 
 var stompClient = null;
 var username = null;
@@ -18,10 +19,15 @@ var colors = [
 
 function connect(event) {
     username = document.querySelector('#name').value.trim();
+	
+	console.log (username);
 
     if(username) {
+	alert('here');
         usernamePage.classList.add('hidden');
-        chatPage.classList.remove('hidden');
+        var board = document.querySelector('#board');
+
+        board.classList.remove('hidden');
 
         var socket = new SockJS('/javatechie');
         stompClient = Stomp.over(socket);
@@ -51,19 +57,23 @@ function onError(error) {
     connectingElement.style.color = 'red';
 }
 
-
 function send(event) {
-    var messageContent = messageInput.value.trim();
-
-    if(messageContent && stompClient) {
+  //  var messageContent = messageInput.value.trim();
+	console.log (event);
+	console.log (typeof(event));
+	var e = new Object({"offsetX": event.offsetX, "offsetY": event.offsetY});
+	
+	console.log (e);
+	
+    if(stompClient) {
         var chatMessage = {
             sender: username,
-            content: messageInput.value,
+            content: JSON.stringify(e),
             type: 'CHAT'
         };
 
         stompClient.send("/app/chat.send", {}, JSON.stringify(chatMessage));
-        messageInput.value = '';
+       // messageInput.value = '';
     }
     event.preventDefault();
 }
@@ -77,6 +87,7 @@ function onMessageReceived(payload) {
     if(message.type === 'JOIN') {
         messageElement.classList.add('event-message');
         message.content = message.sender + ' joined!';
+        alert(message.sender + 'joined!');
     } else if (message.type === 'LEAVE') {
         messageElement.classList.add('event-message');
         message.content = message.sender + ' left!';
@@ -95,7 +106,9 @@ function onMessageReceived(payload) {
         usernameElement.appendChild(usernameText);
         messageElement.appendChild(usernameElement);
     }
-
+	if (typeof JSON.parse(message.content) === 'object' ) console.log (JSON.parse(message.content));
+	put_stone(JSON.parse(message.content));
+	
     var textElement = document.createElement('p');
     var messageText = document.createTextNode(message.content);
     textElement.appendChild(messageText);

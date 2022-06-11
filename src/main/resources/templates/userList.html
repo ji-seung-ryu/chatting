@@ -1,0 +1,43 @@
+<section th:fragment="userListFragment" class="hidden" id="userList" style="background-color: #eee;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-lg-9 col-xl-7">
+        <div class="card rounded-3">
+          <div class="card-body p-4">
+
+            <h4 class="text-center my-3 pb-3">UserList</h4>
+
+            <table class="table mb-4" id="userTable">
+              <thead>
+                <tr>
+                  <th scope="col">WHO</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td scope ="row">Buy groceries for next week</td>
+                  <td>active</td>
+                  
+                </tr>
+                <tr>
+                  <td scope ="row">Renew car insurance</td>
+                  <td>active</td>
+                 
+                </tr>
+                <tr>
+                  <td scope ="row">Sign up for online course</td>
+                  <td>active</td>
+                
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <script defer th:src="@{/js/userList.js}"></script>
+
+</section>

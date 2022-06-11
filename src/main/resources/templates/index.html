@@ -4,6 +4,8 @@
 
 <title>Spring Boot WebSocket Chat Application | CalliCoder</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+
 </head>
 <body>
 	<noscript>
@@ -52,6 +54,7 @@
 
 
 	<div th:replace="omok :: omokFragment"></div>
+	<section th:replace="userList :: userListFragment"></section>
 
 	<script defer th:src="@{/js/main.js}"></script>
 
@@ -59,6 +62,7 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+	<script th:src="@{/js/bootstrap.min.js}"></script>
 
 </body>
 </html>

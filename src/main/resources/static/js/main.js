@@ -26,8 +26,10 @@ function connect(event) {
 	alert('here');
         usernamePage.classList.add('hidden');
         var board = document.querySelector('#board');
+        var userList = document.querySelector('#userList');
 
-        board.classList.remove('hidden');
+     //   board.classList.remove('hidden');
+        userList.classList.remove('hidden');
 
         var socket = new SockJS('/javatechie');
         stompClient = Stomp.over(socket);
@@ -87,10 +89,16 @@ function onMessageReceived(payload) {
     if(message.type === 'JOIN') {
         messageElement.classList.add('event-message');
         message.content = message.sender + ' joined!';
+        if (message.sender === username) setMember(message.members);
+        else addMember(message.sender);
         alert(message.sender + 'joined!');
     } else if (message.type === 'LEAVE') {
         messageElement.classList.add('event-message');
         message.content = message.sender + ' left!';
+        deleteMember(message.sender);
+        alert(message.sender + 'Leave..');
+		
+        
     } else {
         messageElement.classList.add('chat-message');
 
@@ -105,9 +113,9 @@ function onMessageReceived(payload) {
         var usernameText = document.createTextNode(message.sender);
         usernameElement.appendChild(usernameText);
         messageElement.appendChild(usernameElement);
+        put_stone(JSON.parse(message.content));
+
     }
-	if (typeof JSON.parse(message.content) === 'object' ) console.log (JSON.parse(message.content));
-	put_stone(JSON.parse(message.content));
 	
     var textElement = document.createElement('p');
     var messageText = document.createTextNode(message.content);
@@ -130,5 +138,20 @@ function getAvatarColor(messageSender) {
     return colors[index];
 }
 
-usernameForm.addEventListener('submit', connect, true)
-messageForm.addEventListener('submit', send, true)
+function disConnect (){
+	if(stompClient) {
+        var leaveMessage = {
+            sender: username,
+            content: null,
+            type: 'LEAVE'
+        };
+
+        stompClient.send("/app/chat.leave", {}, JSON.stringify(leaveMessage));
+        stompClient.unsubscribe(); 
+       // messageInput.value = '';
+    }
+	
+}
+usernameForm.addEventListener('submit', connect, true);
+messageForm.addEventListener('submit', send, true);
+window.addEventListener('beforeunload',disConnect, true);

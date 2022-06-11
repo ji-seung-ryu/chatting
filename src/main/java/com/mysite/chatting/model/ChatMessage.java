@@ -1,5 +1,7 @@
 package com.mysite.chatting.model;
 
+import java.util.Vector;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,6 +9,7 @@ public class ChatMessage {
 	private String content;
 	private String sender;
 	private MessageType type;
+	private Vector<String> members = new Vector<String>();  
 
 	public enum MessageType {
 		CHAT, LEAVE, JOIN
@@ -36,4 +39,11 @@ public class ChatMessage {
 		this.type = type;
 	}
 
+	public Vector<String> getMembers(){
+		return members;
+	}
+	
+	public void setMembers(Vector<String> members) {
+		this.members = members;
+	}
 }

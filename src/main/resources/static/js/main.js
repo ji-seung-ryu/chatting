@@ -43,13 +43,18 @@ function connect(event) {
 function onConnected() {
     // Subscribe to the Public Topic
     stompClient.subscribe('/topic/public', onMessageReceived);
+    
+    stompClient.subscribe('/topic/' + username, onMessageReceived);
 
     // Tell your username to the server
+    
     stompClient.send("/app/chat.register",
         {},
-        JSON.stringify({sender: username, type: 'JOIN'})
+        JSON.stringify({sender: username, receiver: username, type: 'JOIN'})
     )
 
+	
+	
     connectingElement.classList.add('hidden');
 }
 
@@ -59,6 +64,20 @@ function onError(error) {
     connectingElement.style.color = 'red';
 }
 
+function sendMessage(receiver){
+	
+	
+	if (stompClient){
+		var chatMessage = {
+			sender: username,
+			content : JSON.stringify(`Do you want to play with '${username}'?`),
+			type: 'CHAT',
+			receiver: receiver
+		}
+		
+		stompClient.send("/app/chat.send", {}, JSON.stringify(chatMessage));
+	}
+}
 function send(event) {
   //  var messageContent = messageInput.value.trim();
 	console.log (event);
@@ -83,6 +102,7 @@ function send(event) {
 
 function onMessageReceived(payload) {
     var message = JSON.parse(payload.body);
+    console.log (message.type);
 
     var messageElement = document.createElement('li');
 
@@ -99,7 +119,12 @@ function onMessageReceived(payload) {
         alert(message.sender + 'Leave..');
 		
         
-    } else {
+    } else if (message.type === 'MAIL'){
+		
+        alert(message.sender + 'mail!');
+	
+	} else {
+		alert('chat!');
         messageElement.classList.add('chat-message');
 
         var avatarElement = document.createElement('i');

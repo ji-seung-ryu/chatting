@@ -5,9 +5,11 @@ function addMember(username){
 	
 	const newCell1 = newRow.insertCell(0);
 	const newCell2 = newRow.insertCell(1);
+	const newCell3 = newRow.insertCell(2);
 	
 	newCell1.innerText = username;
 	newCell2.innerText = "active";
+	newCell3.innerHTML = `<button class = '${username}' id='playBtn'>play with</button>`;
 }
 
 function deleteMember(username){
@@ -31,3 +33,14 @@ function deleteMember(username){
 function setMember(members){
 	for (var i=0;i<members.length;i++) addMember(members[i]);
 }
+
+
+document.addEventListener('click',function(e){
+    if(e.target && e.target.id== 'playBtn'){
+	if (e.target.className == username) alert('can not play alone!');
+	else{
+		sendMessage(e.target.className);
+	}
+	
+     }
+ });

@@ -8,11 +8,12 @@ import lombok.Setter;
 public class ChatMessage {
 	private String content;
 	private String sender;
+	private String receiver; 
 	private MessageType type;
 	private Vector<String> members = new Vector<String>();  
 
 	public enum MessageType {
-		CHAT, LEAVE, JOIN
+		CHAT, LEAVE, JOIN, MAIL
 	}
 
 	public String getContent() {
@@ -31,6 +32,13 @@ public class ChatMessage {
 		this.sender = sender;
 	}
 
+	public String getReceiver() {
+		return receiver;
+	}
+	public void setReceiver(String receiver) {
+		this.receiver = receiver;
+	}
+	
 	public MessageType getType() {
 		return type;
 	}

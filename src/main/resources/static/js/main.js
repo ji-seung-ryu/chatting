@@ -64,13 +64,14 @@ function onError(error) {
     connectingElement.style.color = 'red';
 }
 
-function sendMessage(receiver){
+function sendRequest(receiver){
 	
+	var o = {'title' : 'request'};
 	
 	if (stompClient){
 		var chatMessage = {
 			sender: username,
-			content : JSON.stringify(`Do you want to play with '${username}'?`),
+			content : JSON.stringify(o),
 			type: 'CHAT',
 			receiver: receiver
 		}
@@ -78,6 +79,20 @@ function sendMessage(receiver){
 		stompClient.send("/app/chat.send", {}, JSON.stringify(chatMessage));
 	}
 }
+function sendRespond(receiver, ok){
+	var o ={'title':'respond', 'ok': ok};
+	if (stompClient){
+		var chatMessage = {
+			sender: username,
+			content : JSON.stringify(o),
+			type: 'CHAT',
+			receiver: receiver
+		}
+		
+		stompClient.send("/app/chat.send", {}, JSON.stringify(chatMessage));
+	}
+}
+
 function send(event) {
   //  var messageContent = messageInput.value.trim();
 	console.log (event);
@@ -119,12 +134,28 @@ function onMessageReceived(payload) {
         alert(message.sender + 'Leave..');
 		
         
-    } else if (message.type === 'MAIL'){
-		
-        alert(message.sender + 'mail!');
+     
 	
 	} else {
 		alert('chat!');
+		var content = JSON.parse(message.content);
+		var ok = 0;
+		if (content.title === 'request'){
+			if (ok = confirm(message.sender + "와의 대국 하시겠습니까?")){
+				sendRespond(message.sender, ok);
+			}
+			else sendRespond(message.sender, ok);
+		} else if (content.title === 'respond'){
+			if (content.ok){
+				alert('대국장으로 이동!');
+			} else{
+				console.log ('싱대가 거절');
+			}
+			
+		} else{
+			console.log ('not request, respond');
+		}
+		
         messageElement.classList.add('chat-message');
 
         var avatarElement = document.createElement('i');
@@ -138,7 +169,7 @@ function onMessageReceived(payload) {
         var usernameText = document.createTextNode(message.sender);
         usernameElement.appendChild(usernameText);
         messageElement.appendChild(usernameElement);
-        put_stone(JSON.parse(message.content));
+      //  put_stone(JSON.parse(message.content));
 
     }
 	

@@ -13,7 +13,7 @@ public class ChatMessage {
 	private Vector<String> members = new Vector<String>();  
 
 	public enum MessageType {
-		CHAT, LEAVE, JOIN, MAIL
+		CHAT, LEAVE, JOIN
 	}
 
 	public String getContent() {

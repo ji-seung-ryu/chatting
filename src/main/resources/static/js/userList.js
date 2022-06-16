@@ -39,7 +39,7 @@ document.addEventListener('click',function(e){
     if(e.target && e.target.id== 'playBtn'){
 	if (e.target.className == username) alert('can not play alone!');
 	else{
-		sendMessage(e.target.className);
+		sendRequest(e.target.className);
 	}
 	
      }

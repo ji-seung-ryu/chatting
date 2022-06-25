@@ -137,7 +137,6 @@ function onMessageReceived(payload) {
      
 	
 	} else {
-		alert('chat!');
 		var content = JSON.parse(message.content);
 		var ok = 0;
 		if (content.title === 'request'){

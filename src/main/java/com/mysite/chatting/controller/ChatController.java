@@ -1,8 +1,6 @@
 package com.mysite.chatting.controller;
 
-import java.util.Vector;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -12,27 +10,27 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.mysite.chatting.model.ChatMessage;
+import com.mysite.chatting.model.OmokMessage;
 
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.RequiredArgsConstructor;
 
-import com.mysite.chatting.service.ChatService;
 
 @Controller
 @RequiredArgsConstructor
 public class ChatController {
 
 	private final SimpMessagingTemplate simpMessagingTemplate;	
-	private Vector<String> members = new Vector<String>();  
+//	private Vector<String> members = new Vector<String>();  
 	
 	@MessageMapping("/chat.register")
 	@SendTo("/topic/public")
 	public ChatMessage register(@Payload ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor) {
 	
 		headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
-		members.add(chatMessage.getSender());
-		chatMessage.setMembers(members);
+	//	members.add(chatMessage.getSender());
+	//	chatMessage.setMembers(members);
 		
 		return chatMessage;
 	}
@@ -48,8 +46,8 @@ public class ChatController {
 	@SendTo("/topic/public")
 	public ChatMessage leave(@Payload ChatMessage chatMessage) {
 		
-		members.remove(chatMessage.getSender());
-		chatMessage.setMembers(members);
+//		members.remove(chatMessage.getSender());
+	//	chatMessage.setMembers(members);
 		
 		System.out.println("leave call!");
 		return chatMessage;
@@ -64,8 +62,4 @@ public class ChatController {
 	}
 	
 	
-	@GetMapping("/omok")
-	public String omok() {
-		return "omok";
-	}
 }

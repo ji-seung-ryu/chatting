@@ -11,7 +11,7 @@
 
      var board;                        // 판 상태 2차원 배열
      var board_stack = new Array();    // 판 착수 순서 스택
-
+	
      var stone_black_color = "black";  // 흑돌 출력용 CSS 색깔 문자열
      var stone_white_color = "white";  // 백돌 출력용 CSS 색깔 문자열
 
@@ -146,10 +146,96 @@
 	 document.getElementById("whitefirst").disabled = false;
      };
      // 착수 루틴
+   function draw_stone(e){
+	 
+	
+	 var x = 0;
+	 var y = 0;
+	 // 좌표계에서의 판 한칸 크기 저장용 변수
+	 var sz = (CANVAS_GAME_SIZE / (BOARD_SIZE-1));
+
+	 // 가장 가까운 교점에서 떨어진 좌표 오프셋 구하기
+	 var a = (e.offsetX - CANVAS_MARGIN) % sz;
+	 var b = (e.offsetY - CANVAS_MARGIN) % sz;
+
+	 // 가장 가까운 교점 좌표로 조정 시켜주는 로직
+	 if(a <= sz/2){
+	     x = e.offsetX - a - 1;
+	 }else{
+	     x = e.offsetX + (sz-a) - 1;
+	 }
+	 if(b <= sz/2){
+	     y = e.offsetY - b - 1;
+	 }else{
+	     y = e.offsetY + (sz-b) - 1;
+	 }
+
+	 // 소수점 반올림 처리
+	 x = Math.round(x / sz);
+	 y = Math.round(y / sz);
+
+	 // 판 넘어가기 방지용 루틴
+	 if(x > BOARD_SIZE)
+	     x = BOARD_SIZE;
+	 if(y > BOARD_SIZE)
+	     y = BOARD_SIZE;
+
+	 // 좌표계와 배열인덱스 차이 빼주기
+	 if(x-1 >= 0)
+	     x = x-1;
+	 if(y-1 >= 0)
+	     y = y-1;
+
+	 // 디버그 모드 비활성화 이면서 놓은 자리에 돌이 없을 경우
+	 if(!is_debugmode() && board[y][x] == STONE_NONE){
+		
+
+	     var tmp_color = -1;
+
+	     // 현재 턴 차례에 맞게 흑백 구분
+	     if(blackturn)
+		 tmp_color = STONE_BLACK;
+	     else
+		 tmp_color = STONE_WHITE;
+
+	     // 금수 판정 위해 일단 판에 착수 시행
+	     board[y][x] = tmp_color;
+	     // 돌이 한개라도 판에 놓여진 순간 무르기 버튼 활성화
+
+	     if(board_stack.length != 0)
+		 document.getElementById("back_button").disabled = false;
+
+	     var result = check_pointer(x, y, tmp_color, board);
+	     // 정상적인 착수 판정 받았을 경우
+	     if(result == null){
+		 blackturn = !blackturn;
+		 board_stack.push([x, y, tmp_color]); // 기보 스택에 푸시
+	     }
+	     // 금수 판정 받았을 경우
+	     else if(result == false){
+		 board[y][x] = STONE_NONE;
+		 alert('금수 입니다. 놓을 수 없습니다.');
+
+	     }
+	     // 승리 판정 받았을 경우
+	     else if(result == true){
+		 board_stack.push([x, y, tmp_color]); // 기보 스택에 푸시
+		 if(is_blackturn())
+		     win_game(STONE_BLACK);
+		 else
+		     win_game(STONE_WHITE);
+	     }
+	     // 보드판 재 표시
+	     print_board(board);
+	     myTurn = !myTurn;
+	 }
+     }
+     
+     
      function put_stone(e){
 	 if(!is_gamestart()) // 게임이 진행중이지 않을경우
 	     return;
-	
+	if (!myTurn) return;
 	
 	 var x = 0;
 	 var y = 0;
@@ -230,6 +316,7 @@
 	     // 보드판 재 표시
 	     print_board(board);
 	     send(e);
+	     myTurn = !myTurn;
 	 }
      }
      // 무르기 루틴

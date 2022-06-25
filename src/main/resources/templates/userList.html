@@ -1,50 +1,68 @@
-<section th:fragment="userListFragment" class="hidden" id="userList" style="background-color: #eee;">
-  <div class="container py-5 h-100">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col col-lg-9 col-xl-7">
-        <div class="card rounded-3">
-          <div class="card-body p-4">
+<!DOCTYPE html>
+<html>
 
-            <h4 class="text-center my-3 pb-3">UserList</h4>
+<head>
 
-            <table class="table mb-4" id="userTable">
-              <thead>
-                <tr>
-                  <th scope="col">WHO</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Omok</th>
+	<title>SPRING USERLIST</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
 
-                  
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td scope ="row">Buy groceries for next week</td>
-                  <td>active</td>
-                  <td><button id='playBtn'>play with</button></td>
-                  
-                </tr>
-                <tr>
-                  <td scope ="row">Renew car insurance</td>
-                  <td>active</td>
-                  <td><button id='playBtn'>play with</button></td>
-                  
-                 
-                </tr>
-                <tr>
-                  <td scope ="row">Sign up for online course</td>
-                  <td>active</td>
-                  <td><button id='playBtn'>play with</button></td>
-                
-                </tr>
-              </tbody>
-            </table>
+</head>
+<body>
+<section id="userList" style="background-color: #eee;">
+	<div class="container py-5 h-100">
+		<div class="row d-flex justify-content-center align-items-center h-100">
+			<div class="col col-lg-9 col-xl-7">
+				<div class="card rounded-3">
+					<div class="card-body p-4">
 
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-    <script defer th:src="@{/js/userList.js}"></script>
+						<h4 class="text-center my-3 pb-3" th:text="${username} + ' userList'"> </h4>
+
+						<table class="table mb-4" id="userTable">
+							<thead>
+								<tr>
+									<th scope="col">WHO</th>
+									<th scope="col">Status</th>
+									<th scope="col">Omok</th>
+
+
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each = "user : ${userList}">
+									<td th:text="${user.name}"></td>
+									<td th:text="${user.status}"></td>
+									<td><button id='playBtn' th:class = "${user.name}">play with</button></td>
+									
+								</tr>
+							
+							</tbody>
+						</table>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script th:inline="javascript">
+    
+    /*<![CDATA[*/
+    
+    var username = /*[[${username}]]*/ 'default';
+    
+    /*]]>*/
+    
+	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js" integrity="sha512-xIPqqrfvUAc/Cspuj7Bq0UtHNo/5qkdyngx6Vwt+tmbvTLDszzXM0G6c91LXmGrRx8KEPulT+AfOOez+TeVylg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<script defer th:src="@{/js/userList.js}"></script>
+	<script defer th:src="@{/js/connect.js}"></script>
+
 
 </section>
+<body>
+</html>

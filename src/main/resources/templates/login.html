@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>SPRING LOGIN</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+
+</head>
+<body>
+	<noscript>
+		<h2>Sorry! Your browser doesn't support Javascript</h2>
+	</noscript>
+
+	<div id="username-page">
+		<div class="username-page-container">
+			<h1 class="title">Type your username</h1>
+			<form id="usernameForm" name="usernameForm">
+				<div class="form-group">
+					<input type="text" id="name" placeholder="Username"
+						autocomplete="off" class="form-control" />
+				</div>
+				<div class="form-group">
+					<button type="submit" class="accent username-submit">Start
+						Chatting</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js" integrity="sha512-xIPqqrfvUAc/Cspuj7Bq0UtHNo/5qkdyngx6Vwt+tmbvTLDszzXM0G6c91LXmGrRx8KEPulT+AfOOez+TeVylg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+	<script defer th:src="@{/js/login.js}"></script>
+	<script defer th:src="@{/js/bootstrap.min.js}"></script>
+</body>

@@ -19,7 +19,7 @@
     <!-- =============================== CSS Style 끝 ===============================  -->
   <!-- =================================== HEAD 끝 ==================================  -->
   <!-- ================================== BODY 시작 =================================  -->
-    <div class="top"><h1 align="center">오목</h1></div>
+    <div class="top"><tr align="center" th:each ="username: ${memberList}" ><td th:text = "${username}" > </td> </tr></div>
     <div class="layout">
       <div class="left">
 	<div style="margin:30px;">
@@ -55,5 +55,22 @@
       </div>
     </div>
   <!-- =================================== BODY 끝 ==================================  -->
+  <script th:inline="javascript">
+    
+    /*<![CDATA[*/
+    
+    var username = /*[[${username}]]*/ 'default';
+    var omokRoomId = /*[[${omokRoomId}]]*/ 'default';
+    var opponent = /*[[${opponent}]]*/ 'default';
+	var myTurn;
+    /*]]>*/
+    
+	</script>
+  	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
   	<script defer th:src="@{/js/omok.js}"></script>
+  	<script defer th:src="@{/js/omok_connect.js}"></script>
+
 </div>
